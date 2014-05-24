@@ -1,8 +1,23 @@
 ﻿
 using System;
+using System.Collections.Generic;
 
 namespace CodeSnippets.Samples {
-    public class DisposableSealedObject : IDisposable {
+    public sealed class DisposableSealedObject : IDisposable {
+
+        private IntPtr handle;
+        private List<String> peoples = new List<string>();
+
+        public DisposableSealedObject(IntPtr handle) {
+            CreatePeopleListForNoReason();
+            this.handle = handle;
+        }
+
+        private void CreatePeopleListForNoReason() {
+            for (int i = 0; i < 1000; i++) {
+                peoples.Add(i.ToString());
+            }
+        }
 
         #region IDisposable Members
 
@@ -40,12 +55,17 @@ namespace CodeSnippets.Samples {
         }
 
 		private void DisposeManagedResources() {
-			
+
+            if (peoples != null) {
+                peoples.Clear();
+                peoples = null;
+            }
 
 		}
     
 		private void DisposeUnmanagedResources() {
-    
+            CloseHandle(handle);
+            handle = IntPtr.Zero;
 		}
     
 		/// <summary>
@@ -57,6 +77,8 @@ namespace CodeSnippets.Samples {
 
         }
 
+        [System.Runtime.InteropServices.DllImport("Kernel32")]
+        private extern static Boolean CloseHandle(IntPtr handle);
         #endregion
 
               

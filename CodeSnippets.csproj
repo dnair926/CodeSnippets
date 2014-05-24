@@ -40,15 +40,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Samples\ObjectWithDisposableObject.cs" />
-    <Compile Include="Samples\DisposableSealedObject.cs" />
+    <Compile Include="Samples\IDisposable\DisposableBaseClass.cs" />
+    <Compile Include="Samples\IDisposable\DisposableDerivedClass.cs" />
+    <Compile Include="Samples\IDisposable\DisposableSealedObject.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CodeSnippets\CSharp\IDisposableSealedClass.snippet">
+    <None Include="CodeSnippets\CSharp\IDisposableDerived.snippet">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CodeSnippets\CSharp\IDisposableBase.snippet">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CodeSnippets\CSharp\IDisposableSealedUnmanagedOnly.snippet" />
+    <None Include="CodeSnippets\CSharp\IDisposableSealedManagedAndUnmanaged.snippet">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="CodeSnippets\CSharp\IDisposableSealedManagedOnly.snippet" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)CodeSnippets\CSharp\*.*" "C:\Users\Deleep\Documents\Visual Studio 2012\Code Snippets\Visual C#\My Code Snippets\" /y</PostBuildEvent>

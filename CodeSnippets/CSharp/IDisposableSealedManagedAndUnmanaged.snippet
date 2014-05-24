@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>IDisposable implementation for sealed class with Managed and Unmanaged Resources</Title>
+            <Author>Deleep Nair</Author>
+            <Description>Based on the blog by Paul Ballard (http://blog.pluralsight.com/idisposable-for-dummies-1-why-what)</Description>
+            <Shortcut>IDisposeSealedBoth</Shortcut>
+        </Header>
+        <Snippet>
+          <Imports>
+            <Import>
+              <Namespace>System</Namespace>
+            </Import>
+          </Imports>
+          <Declarations>
+            <Object>
+              <ID>ManagedGlobalResource</ID>
+              <ToolTip>Global resource variable name</ToolTip>
+              <Type>System.Object</Type>
+              <Default>_managedResource</Default>
+            </Object>
+            <Object>
+              <ID>DisposingObject</ID>
+              <ToolTip>Global resource variable name</ToolTip>
+              <Type>System.Object</Type>
+              <Default>CurrentObject</Default>
+            </Object>
+          </Declarations>
+          <Code Language="CSharp">
+                <![CDATA[
+        #region IDisposable Members
+
+        private bool _isDisposed = false;
+
+        ~$DisposingObject$() {
+          Dispose(false);
+        }
+
+        public void Dispose() {
+          Dispose(true);
+          GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool canDisposeManagedResources) {
+          if (_isDisposed) {
+			      return;			
+          }
+
+          if (canDisposeManagedResources) {
+            try {
+              DisposeManagedResources();
+            } catch (Exception ex) {
+
+            }
+          }
+
+          try {
+            DisposeUnmanagedResources();
+          } catch (Exception ex) {
+
+          }
+
+          _isDisposed = true;
+        }
+
+        private void DisposeManagedResources() {
+			
+          if ($ManagedGlobalResource$ != null) {
+	          $ManagedGlobalResource$.Dispose();
+	          $ManagedGlobalResource$ = null;
+          }
+
+        }
+    
+        private void DisposeUnmanagedResources() {
+    
+        }
+    
+        /// <summary>
+        /// This should be the first statement in all public members of this object.
+        /// </summary>
+        private void CheckIfDisposeAndRaiseException() {
+          if (_isDisposed)
+            throw new ObjectDisposedException(this.GetType().FullName);
+
+        }
+
+        #endregion
+
+              ]]>
+            </Code>
+
+        </Snippet>
+        
+    </CodeSnippet>
+</CodeSnippets>

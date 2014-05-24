@@ -3,20 +3,15 @@
     xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
         <Header>
-            <Title>Disposable</Title>
+            <Title>IDisposable implementation for a base class</Title>
             <Author>Deleep Nair</Author>
-            <Description>Code to handle object disposal.</Description>
-            <Shortcut>dispose</Shortcut>
+            <Description>Based on the blog by Paul Ballard (http://blog.pluralsight.com/idisposable-for-dummies-1-why-what)</Description>
+            <Shortcut>IDisposeBase</Shortcut>
         </Header>
         <Snippet>
-          <References>
-            <Reference>
-              <Assembly>System.Data.dll</Assembly>
-            </Reference>
-          </References>
           <Imports>
             <Import>
-              <Namespace>System.Data</Namespace>
+              <Namespace>System</Namespace>
             </Import>
           </Imports>
           <Declarations>
@@ -40,55 +35,55 @@
         private bool _isDisposed = false;
 
         ~$DisposingObject$() {
-            Dispose(false);
+          Dispose(false);
         }
 
         public void Dispose() {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+          Dispose(true);
+          GC.SuppressFinalize(this);
         }
 
-        private void Dispose(bool canDisposeManagedResources) {
-            if (_isDisposed) {
-				return;			
-            }
+        public virtual void Dispose(bool canDisposeManagedResources) {
+          if (_isDisposed) {
+			      return;			
+          }
 
-            if (canDisposeManagedResources) {
-                try {
-					DisposeManagedResources();
-                } catch (Exception ex) {
-
-                }
-            }
-
+          if (canDisposeManagedResources) {
             try {
-				DisposeUnmanagedResources();
+              DisposeManagedResources();
             } catch (Exception ex) {
 
             }
+          }
 
-            _isDisposed = true;
+          try {
+            DisposeUnmanagedResources();
+          } catch (Exception ex) {
+
+          }
+
+          _isDisposed = true;
         }
 
-		private void DisposeManagedResources() {
+        private void DisposeManagedResources() {
 			
-			if ($ManagedGlobalResource$ != null) {
-				$ManagedGlobalResource$.Dispose();
-				$ManagedGlobalResource$ = null;
-			}
+          if ($ManagedGlobalResource$ != null) {
+	          $ManagedGlobalResource$.Dispose();
+	          $ManagedGlobalResource$ = null;
+          }
 
-		}
+        }
     
-		private void DisposeUnmanagedResources() {
+        private void DisposeUnmanagedResources() {
     
-		}
+        }
     
-		/// <summary>
-		/// This should be in all public functions and properties as the first call.
-		/// </summary>
+        /// <summary>
+        /// This should be the first statement in all public members of this object.
+        /// </summary>
         private void CheckIfDisposeAndRaiseException() {
-            if (_isDisposed)
-                throw new ObjectDisposedException(@"BothTypeOfResourcesClass");
+          if (_isDisposed)
+            throw new ObjectDisposedException(this.GetType().FullName);
 
         }
 

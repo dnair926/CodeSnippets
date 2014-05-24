@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>IDisposable implementation for a sealed class with managed resources only.</Title>
+            <Author>Deleep Nair</Author>
+            <Description>Code to handle object disposal.</Description>
+            <Shortcut>IDisposeSealedUnmanaged</Shortcut>
+        </Header>
+        <Snippet>
+          <References>
+            <Reference>
+              <Assembly>System.Data.dll</Assembly>
+            </Reference>
+          </References>
+          <Imports>
+            <Import>
+              <Namespace>System.Data</Namespace>
+            </Import>
+          </Imports>
+          <Declarations>
+            <Object>
+              <ID>ManagedGlobalResource</ID>
+              <ToolTip>Global resource variable name</ToolTip>
+              <Type>System.Object</Type>
+              <Default>_managedResource</Default>
+            </Object>
+            <Object>
+              <ID>DisposingObject</ID>
+              <ToolTip>Global resource variable name</ToolTip>
+              <Type>System.Object</Type>
+              <Default>CurrentObject</Default>
+            </Object>
+          </Declarations>
+          <Code Language="CSharp">
+                <![CDATA[
+        #region IDisposable Members
+
+        private bool _isDisposed = false;
+
+        ~$DisposingObject$() {
+          Dispose(false);
+        }
+
+        public void Dispose() {
+          Dispose(true);
+          GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool canDisposeManagedResources) {
+          if (_isDisposed) {
+			      return;			
+          }
+
+          try {
+            DisposeUnmanagedResources();
+          } catch (Exception ex) {
+
+          }
+
+          _isDisposed = true;
+        }
+    
+        private void DisposeUnmanagedResources() {
+    
+        }
+    
+        /// <summary>
+        /// This should be the first statement in all public members of this object.
+        /// </summary>
+        private void CheckIfDisposeAndRaiseException() {
+          if (_isDisposed)
+            throw new ObjectDisposedException(this.GetType().FullName);
+
+        }
+
+        #endregion
+
+              ]]>
+            </Code>
+
+        </Snippet>
+        
+    </CodeSnippet>
+</CodeSnippets>
