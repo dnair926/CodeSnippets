@@ -67,8 +67,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)CodeSnippets\CSharp\*.*" "C:\Users\Deleep\Documents\Visual Studio 2012\Code Snippets\Visual C#\My Code Snippets\" /y
-xcopy "$(ProjectDir)CodeSnippets\VB\*.*" "C:\Users\Deleep\Documents\Visual Studio 2012\Code Snippets\Visual Basic\My Code Snippets\" /y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(ProjectDir)IDisposable\CSharp\*.*" "C:\Users\Deleep\Documents\Visual Studio 2012\Code Snippets\Visual C#\My Code Snippets\" /y
+xcopy "$(ProjectDir)IDisposable\VB\*.*" "C:\Users\Deleep\Documents\Visual Studio 2012\Code Snippets\Visual Basic\My Code Snippets\" /y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
