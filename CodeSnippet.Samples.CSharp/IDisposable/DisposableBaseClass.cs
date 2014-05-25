@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace CodeSnippets.Samples {
-    public class DisposableBaseClass {
+    public class DisposableBaseClass : IDisposable {
 
 
         #region IDisposable Members
@@ -12,56 +12,56 @@ namespace CodeSnippets.Samples {
         private bool _isDisposed = false;
 
         ~DisposableBaseClass() {
-          Dispose(false);
+            Dispose(false);
         }
 
         public void Dispose() {
-          Dispose(true);
-          GC.SuppressFinalize(this);
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public virtual void Dispose(bool canDisposeManagedResources) {
-          if (_isDisposed) {
-			      return;			
-          }
+            if (_isDisposed) {
+                return;
+            }
 
-          if (canDisposeManagedResources) {
+            if (canDisposeManagedResources) {
+                try {
+                    DisposeManagedResources();
+                } catch (Exception ex) {
+
+                }
+            }
+
             try {
-              DisposeManagedResources();
+                DisposeUnmanagedResources();
             } catch (Exception ex) {
 
             }
-          }
 
-          try {
-            DisposeUnmanagedResources();
-          } catch (Exception ex) {
-
-          }
-
-          _isDisposed = true;
+            _isDisposed = true;
         }
 
         private void DisposeManagedResources() {
-			
+
 
         }
-    
+
         private void DisposeUnmanagedResources() {
-    
+
         }
-    
+
         /// <summary>
         /// This should be the first statement in all public members of this object.
         /// </summary>
         private void CheckIfDisposeAndRaiseException() {
-          if (_isDisposed)
-            throw new ObjectDisposedException(this.GetType().FullName);
+            if (_isDisposed)
+                throw new ObjectDisposedException(this.GetType().FullName);
 
         }
 
         #endregion
 
-              
+
     }
 }

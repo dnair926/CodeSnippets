@@ -34,19 +34,19 @@ namespace CodeSnippets.Samples {
 
         private void Dispose(bool canDisposeManagedResources) {
             if (_isDisposed) {
-				return;			
+                return;
             }
 
             if (canDisposeManagedResources) {
                 try {
-					DisposeManagedResources();
+                    DisposeManagedResources();
                 } catch (Exception ex) {
 
                 }
             }
 
             try {
-				DisposeUnmanagedResources();
+                DisposeUnmanagedResources();
             } catch (Exception ex) {
 
             }
@@ -54,23 +54,23 @@ namespace CodeSnippets.Samples {
             _isDisposed = true;
         }
 
-		private void DisposeManagedResources() {
+        private void DisposeManagedResources() {
 
             if (peoples != null) {
                 peoples.Clear();
                 peoples = null;
             }
 
-		}
-    
-		private void DisposeUnmanagedResources() {
+        }
+
+        private void DisposeUnmanagedResources() {
             CloseHandle(handle);
             handle = IntPtr.Zero;
-		}
-    
-		/// <summary>
-		/// This should be in all public functions and properties as the first call.
-		/// </summary>
+        }
+
+        /// <summary>
+        /// This should be in all public functions and properties as the first call.
+        /// </summary>
         private void CheckIfDisposeAndRaiseException() {
             if (_isDisposed)
                 throw new ObjectDisposedException(@"BothTypeOfResourcesClass");
@@ -81,6 +81,6 @@ namespace CodeSnippets.Samples {
         private extern static Boolean CloseHandle(IntPtr handle);
         #endregion
 
-              
+
     }
 }

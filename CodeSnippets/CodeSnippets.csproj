@@ -40,28 +40,35 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Samples\IDisposable\DisposableBaseClass.cs" />
-    <Compile Include="Samples\IDisposable\DisposableDerivedClass.cs" />
-    <Compile Include="Samples\IDisposable\DisposableSealedObject.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CodeSnippets\CSharp\IDisposableDerived.snippet">
+    <None Include="IDisposable\CSharp\IDisposableDerived.snippet">
       <SubType>Designer</SubType>
     </None>
-    <None Include="CodeSnippets\CSharp\IDisposableBase.snippet">
+    <None Include="IDisposable\CSharp\IDisposableBase.snippet">
       <SubType>Designer</SubType>
     </None>
-    <None Include="CodeSnippets\CSharp\IDisposableSealedUnmanagedOnly.snippet" />
-    <None Include="CodeSnippets\CSharp\IDisposableSealedManagedAndUnmanaged.snippet">
+    <None Include="IDisposable\CSharp\IDisposableSealedUnmanagedOnly.snippet" />
+    <None Include="IDisposable\CSharp\IDisposableSealedManagedAndUnmanaged.snippet">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="CodeSnippets\CSharp\IDisposableSealedManagedOnly.snippet" />
+    <None Include="IDisposable\CSharp\IDisposableSealedManagedOnly.snippet" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="IDisposable\VB\IDisposableBase.snippet" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="IDisposable\VB\IDisposableSealedUnmanagedOnly.snippet" />
+    <None Include="IDisposable\VB\IDisposableSealedManagedOnly.snippet" />
+    <None Include="IDisposable\VB\IDisposableSealedManagedAndUnmanaged.snippet" />
+    <None Include="IDisposable\VB\IDisposableDerived.snippet" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)CodeSnippets\CSharp\*.*" "C:\Users\Deleep\Documents\Visual Studio 2012\Code Snippets\Visual C#\My Code Snippets\" /y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(ProjectDir)CodeSnippets\CSharp\*.*" "C:\Users\Deleep\Documents\Visual Studio 2012\Code Snippets\Visual C#\My Code Snippets\" /y
+xcopy "$(ProjectDir)CodeSnippets\VB\*.*" "C:\Users\Deleep\Documents\Visual Studio 2012\Code Snippets\Visual Basic\My Code Snippets\" /y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

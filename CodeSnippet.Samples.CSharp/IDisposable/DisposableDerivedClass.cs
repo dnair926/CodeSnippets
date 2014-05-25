@@ -6,7 +6,7 @@ using System.Text;
 namespace CodeSnippets.Samples {
     public class DisposableDerivedClass : DisposableBaseClass {
 
-        
+
         #region IDisposable Members
 
         private bool _isDisposed = false;
@@ -52,6 +52,6 @@ namespace CodeSnippets.Samples {
 
         #endregion
 
-              
+
     }
 }
