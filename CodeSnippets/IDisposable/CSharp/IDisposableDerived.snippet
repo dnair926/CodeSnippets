@@ -34,7 +34,7 @@
 
         private bool _isDisposed = false;
 
-        public virtual void Dispose(bool canDisposeManagedResources) {
+        public override void Dispose(bool canDisposeManagedResources) {
           if (_isDisposed) {
 			      return;			
           }

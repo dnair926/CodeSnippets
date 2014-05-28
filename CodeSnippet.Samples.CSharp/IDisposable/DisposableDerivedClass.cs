@@ -11,47 +11,48 @@ namespace CodeSnippets.Samples {
 
         private bool _isDisposed = false;
 
-        public virtual void Dispose(bool canDisposeManagedResources) {
-            if (_isDisposed) {
-                return;
-            }
+        public override void Dispose(bool canDisposeManagedResources) {
+          if (_isDisposed) {
+			      return;			
+          }
 
-            if (canDisposeManagedResources) {
-                try {
-                    DisposeManagedResources();
-                } catch (Exception ex) {
-
-                }
-            }
-
+          if (canDisposeManagedResources) {
             try {
-                DisposeUnmanagedResources();
+              DisposeManagedResources();
             } catch (Exception ex) {
 
             }
+          }
 
-            _isDisposed = true;
+          try {
+            DisposeUnmanagedResources();
+          } catch (Exception ex) {
+
+          }
+
+          _isDisposed = true;
         }
 
         private void DisposeManagedResources() {
-
+			
         }
-
+    
         private void DisposeUnmanagedResources() {
-
+    
         }
-
+    
         /// <summary>
         /// This should be the first statement in all public members of this object.
         /// </summary>
         private void CheckIfDisposeAndRaiseException() {
-            if (_isDisposed)
-                throw new ObjectDisposedException(this.GetType().FullName);
+          if (_isDisposed)
+            throw new ObjectDisposedException(this.GetType().FullName);
 
         }
 
         #endregion
 
+              
 
     }
 }
