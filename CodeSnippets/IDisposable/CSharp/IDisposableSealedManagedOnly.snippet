@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
         <Header>
-            <Title>IDisposable implementation for a sealed class with unmanaged resources only.</Title>
+            <Title>IDisposable - sealed class (Managed resources only).</Title>
             <Author>Deleep Nair</Author>
             <Description>Code to handle object disposal.</Description>
             <Shortcut>IDisposeSealedManaged</Shortcut>
@@ -37,24 +37,37 @@
                 <![CDATA[
         #region IDisposable Members
 
+        // --------------------------------------------
+        // NOTE: Implement IDisposable for the class
+        // --------------------------------------------
+
         private bool _isDisposed = false;
 
+        /// <summary>
+        /// Method that will be called explicitly to dispose the resources in this object.
+        /// </summary>
+        /// <remarks>
+        /// This code should be used as-is for the Dispose functionality.
+        /// </remarks>
         public void Dispose() {
-          if (_isDisposed) {
-			      return;			
-          }
+            if (this._isDisposed) {
+			          return;			
+            }
 
-          DisposeManagedResources();
+            DisposeManagedResources();
 
-          GC.SuppressFinalize(this);
+            GC.SuppressFinalize(this);
         }
-
+        
+        /// <summary>
+        /// Dispose all the managed resources here.
+        /// </summary>
         private void DisposeManagedResources() {
 			
-          if ($ManagedGlobalResource$ != null) {
-            $ManagedGlobalResource$.Dispose();
-            $ManagedGlobalResource$ = null;
-          }
+            if ($ManagedGlobalResource$ != null) {
+                $ManagedGlobalResource$.Dispose();
+                $ManagedGlobalResource$ = null;
+            }
 
         }
         
@@ -62,8 +75,10 @@
         /// This should be the first statement in all public members of this object.
         /// </summary>
         private void CheckIfDisposeAndRaiseException() {
-          if (_isDisposed)
-            throw new ObjectDisposedException(this.GetType().FullName);
+        
+            if (this._isDisposed) {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }            
 
         }
 

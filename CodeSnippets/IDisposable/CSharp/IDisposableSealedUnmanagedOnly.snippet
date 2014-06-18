@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
         <Header>
-            <Title>IDisposable implementation for a sealed class with managed resources only.</Title>
+            <Title>IDisposable - sealed class (Managed resources only).</Title>
             <Author>Deleep Nair</Author>
             <Description>Code to handle object disposal.</Description>
             <Shortcut>IDisposeSealedUnmanaged</Shortcut>
@@ -37,31 +37,57 @@
                 <![CDATA[
         #region IDisposable Members
 
+        // --------------------------------------------
+        // NOTE: Implement IDisposable for the class
+        // --------------------------------------------
+
         private bool _isDisposed = false;
 
+        /// <summary>
+        /// Finalize method to dispose resources when object goes out of scope.
+        /// </summary>
+        /// <remarks>
+        /// This code should be used as-is for the Dispose functionality.
+        /// </remarks>
         ~$DisposingObject$() {
-          Dispose(false);
+            Dispose(false);
         }
 
+        /// <summary>
+        /// Method that will be called explicitly to dispose the resources in this object.
+        /// </summary>
+        /// <remarks>
+        /// This code should be used as-is for the Dispose functionality.
+        /// </remarks>
         public void Dispose() {
-          Dispose(true);
-          GC.SuppressFinalize(this);
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Method that handles the logic to dispose object when it goes out of scope and when disposed explicitly.
+        ///  Also, handles the redundant object disposal.
+        /// </summary>
+        /// <remarks>
+        /// This code should be used as-is for the Dispose functionality.
+        /// </remarks>
         private void Dispose(bool canDisposeManagedResources) {
-          if (_isDisposed) {
-			      return;			
-          }
+            if (this._isDisposed) {
+			          return;			
+            }
 
-          try {
-            DisposeUnmanagedResources();
-          } catch (Exception ex) {
+            try {
+                this.DisposeUnmanagedResources();
+            } catch (Exception ex) {
 
-          }
+            }
 
-          _isDisposed = true;
+            _isDisposed = true;
         }
     
+        /// <summary>
+        /// Dispose all unmanaged resources here.
+        /// </summary>
         private void DisposeUnmanagedResources() {
     
         }
@@ -70,9 +96,11 @@
         /// This should be the first statement in all public members of this object.
         /// </summary>
         private void CheckIfDisposeAndRaiseException() {
-          if (_isDisposed)
-            throw new ObjectDisposedException(this.GetType().FullName);
-
+        
+          if (this._isDisposed) {
+              throw new ObjectDisposedException(this.GetType().FullName);
+          }
+          
         }
 
         #endregion

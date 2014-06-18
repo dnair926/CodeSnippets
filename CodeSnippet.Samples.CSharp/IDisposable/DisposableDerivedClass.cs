@@ -6,53 +6,30 @@ using System.Text;
 namespace CodeSnippets.Samples {
     public class DisposableDerivedClass : DisposableBaseClass {
 
-
         #region IDisposable Members
 
-        private bool _isDisposed = false;
-
-        public override void Dispose(bool canDisposeManagedResources) {
-          if (_isDisposed) {
-			      return;			
-          }
-
-          if (canDisposeManagedResources) {
-            try {
-              DisposeManagedResources();
-            } catch (Exception ex) {
-
-            }
-          }
-
-          try {
-            DisposeUnmanagedResources();
-          } catch (Exception ex) {
-
-          }
-
-          _isDisposed = true;
-        }
-
-        private void DisposeManagedResources() {
+        /// <summary>
+        /// Dispose all managed resources here.
+        /// </summary>
+        public override void DisposeManagedResources() {
 			
-        }
-    
-        private void DisposeUnmanagedResources() {
-    
+          if (_managedResource != null) {
+            _managedResource.Dispose();
+            _managedResource = null;
+          }
+
+            base.DisposeManagedResources();
         }
     
         /// <summary>
-        /// This should be the first statement in all public members of this object.
+        /// Dispose all unmanaged resources here.
         /// </summary>
-        private void CheckIfDisposeAndRaiseException() {
-          if (_isDisposed)
-            throw new ObjectDisposedException(this.GetType().FullName);
-
+        public overrides void DisposeUnmanagedResources() {
+    
         }
-
+    
         #endregion
 
               
-
     }
 }

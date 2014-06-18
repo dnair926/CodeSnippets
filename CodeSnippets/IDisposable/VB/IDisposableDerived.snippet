@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
         <Header>
-            <Title>IDisposable implementation for class derived from base class that implements IDisposable</Title>
+            <Title>IDisposable - Derived class</Title>
             <Author>Deleep Nair</Author>
             <Description>Based on the blog by Paul Ballard (http://blog.pluralsight.com/idisposable-for-dummies-1-why-what)</Description>
             <Shortcut>IDisposeDerived</Shortcut>
@@ -32,31 +32,7 @@
                 <![CDATA[
           #Region "IDisposable Members"
 
-              Private _isDisposed As Boolean = False
-
-              Public Overridable Sub Dispose(canDisposeManagedResources As Boolean)
-                  If _isDisposed Then
-                      Return
-                  End If
-
-                  If canDisposeManagedResources Then
-                      Try
-                          DisposeManagedResources()
-
-                      Catch ex As Exception
-                      End Try
-                  End If
-
-                  Try
-                      DisposeUnmanagedResources()
-
-                  Catch ex As Exception
-                  End Try
-
-                  _isDisposed = True
-              End Sub
-
-              Private Sub DisposeManagedResources()
+              Protected Overrides Sub DisposeManagedResources()
 
                   If ($ManagedGlobalResource$) IsNot Nothing Then
                       $ManagedGlobalResource$.Dispose()
@@ -65,17 +41,7 @@
 
               End Sub
 
-              Private Sub DisposeUnmanagedResources()
-
-              End Sub
-
-              ''' <summary>
-              ''' This should be the first statement in all public members of this object.
-              ''' </summary>
-              Private Sub CheckIfDisposeAndRaiseException()
-                  If _isDisposed Then
-                      Throw New ObjectDisposedException(Me.[GetType]().FullName)
-                  End If
+              Protected Overrides Sub DisposeUnmanagedResources()
 
               End Sub
 

@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
         <Header>
-            <Title>IDisposable implementation for a base class</Title>
+            <Title>IDisposable - Base class</Title>
             <Author>Deleep Nair</Author>
             <Description>Based on the blog by Paul Ballard (http://blog.pluralsight.com/idisposable-for-dummies-1-why-what)</Description>
             <Shortcut>IDisposeBase</Shortcut>
@@ -31,59 +31,90 @@
           <Code Language="CSharp">
                 <![CDATA[
         #region IDisposable Members
-
+        
+        // --------------------------------------------
+        // NOTE: Implement IDisposable for the class
+        // --------------------------------------------
+        
         private bool _isDisposed = false;
 
+        /// <summary>
+        /// Finalize method to dispose resources when object goes out of scope.
+        /// </summary>
+        /// <remarks>
+        /// This code should be used as-is for the Dispose functionality.
+        /// </remarks>
         ~$DisposingObject$() {
-          Dispose(false);
+            Dispose(false);
         }
 
+        /// <summary>
+        /// Method that will be called explicitly to dispose the resources in this object.
+        /// </summary>
+        /// <remarks>
+        /// This code should be used as-is for the Dispose functionality.
+        /// </remarks>
         public void Dispose() {
-          Dispose(true);
-          GC.SuppressFinalize(this);
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        public virtual void Dispose(bool canDisposeManagedResources) {
-          if (_isDisposed) {
-			      return;			
-          }
+        /// <summary>
+        /// Method that handles the logic to dispose object when it goes out of scope and when disposed explicitly.
+        ///  Also, handles the redundant object disposal.
+        /// </summary>
+        /// <remarks>
+        /// This code should be used as-is for the Dispose functionality and should be overriden by derived classes.
+        /// </remarks>
+        public void Dispose(bool canDisposeManagedResources) {
+            if (this._isDisposed) {
+			          return;			
+            }
 
-          if (canDisposeManagedResources) {
+            if (canDisposeManagedResources) {
+                try {
+                    this.DisposeManagedResources();
+                } catch (Exception ex) {
+
+                }
+            }
+
             try {
-              DisposeManagedResources();
+                this.DisposeUnmanagedResources();
             } catch (Exception ex) {
 
             }
-          }
 
-          try {
-            DisposeUnmanagedResources();
-          } catch (Exception ex) {
-
-          }
-
-          _isDisposed = true;
+            this._isDisposed = true;
         }
 
-        private void DisposeManagedResources() {
+        /// <summary>
+        /// Dispose all managed resources here.
+        /// </summary>
+        protected virtual void DisposeManagedResources() {
 			
-          if ($ManagedGlobalResource$ != null) {
-	          $ManagedGlobalResource$.Dispose();
-	          $ManagedGlobalResource$ = null;
-          }
+            if ($ManagedGlobalResource$ != null) {
+	              $ManagedGlobalResource$.Dispose();
+	              $ManagedGlobalResource$ = null;
+            }
 
         }
     
-        private void DisposeUnmanagedResources() {
+        /// <summary>
+        /// Dispose all the unmanaged resources here.
+        /// </summary>
+        protected virtual void DisposeUnmanagedResources() {
     
         }
     
         /// <summary>
         /// This should be the first statement in all public members of this object.
         /// </summary>
-        private void CheckIfDisposeAndRaiseException() {
-          if (_isDisposed)
-            throw new ObjectDisposedException(this.GetType().FullName);
+        protected void CheckIfDisposeAndRaiseException() {
+        
+            if (this._isDisposed) {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
 
         }
 

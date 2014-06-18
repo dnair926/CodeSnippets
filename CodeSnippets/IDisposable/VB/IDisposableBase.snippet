@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
         <Header>
-            <Title>IDisposable implementation for a base class</Title>
+            <Title>IDisposable - Base class</Title>
             <Author>Deleep Nair</Author>
             <Description>Based on the blog by Paul Ballard (http://blog.pluralsight.com/idisposable-for-dummies-1-why-what)</Description>
             <Shortcut>IDisposeBase</Shortcut>
@@ -47,7 +47,7 @@
                     GC.SuppressFinalize(Me)
                 End Sub
 
-                Public Overridable Sub Dispose(canDisposeManagedResources As Boolean)
+                Public Sub Dispose(canDisposeManagedResources As Boolean)
                     If _isDisposed Then
                         Return
                     End If
@@ -69,7 +69,7 @@
                     _isDisposed = True
                 End Sub
 
-                Private Sub DisposeManagedResources()
+                Protected Overridable Sub DisposeManagedResources()
 
                     If ($ManagedGlobalResource$) IsNot Nothing Then
                         $ManagedGlobalResource$.Dispose()
@@ -78,14 +78,14 @@
 
                 End Sub
 
-                Private Sub DisposeUnmanagedResources()
+                Protected Overridable Sub DisposeUnmanagedResources()
 
                 End Sub
 
                 ''' <summary>
                 ''' This should be the first statement in all public members of this object.
                 ''' </summary>
-                Private Sub CheckIfDisposeAndRaiseException()
+                Public Sub CheckIfDisposeAndRaiseException()
                     If _isDisposed Then
                         Throw New ObjectDisposedException(Me.[GetType]().FullName)
                     End If
