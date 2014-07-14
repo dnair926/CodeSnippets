@@ -57,6 +57,8 @@
             DisposeManagedResources();
 
             GC.SuppressFinalize(this);
+            
+            this._isDisposed = true;
         }
         
         /// <summary>
