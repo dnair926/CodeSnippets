@@ -1,129 +1,126 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CodeSnippets
-    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
-    <CodeSnippet Format="1.0.0">
-        <Header>
-            <Title>IDisposable - Base class</Title>
-            <Author>Deleep Nair</Author>
-            <Description>Based on the blog by Paul Ballard (http://blog.pluralsight.com/idisposable-for-dummies-1-why-what)</Description>
-            <Shortcut>IDisposeBase</Shortcut>
-        </Header>
-        <Snippet>
-          <Imports>
-            <Import>
-              <Namespace>System</Namespace>
-            </Import>
-          </Imports>
-          <Declarations>
-            <Object>
-              <ID>ManagedGlobalResource</ID>
-              <ToolTip>Global resource variable name</ToolTip>
-              <Type>System.Object</Type>
-              <Default>_managedResource</Default>
-            </Object>
-            <Object>
-              <ID>DisposingObject</ID>
-              <ToolTip>Global resource variable name</ToolTip>
-              <Type>System.Object</Type>
-              <Default>CurrentObject</Default>
-            </Object>
-          </Declarations>
-          <Code Language="CSharp">
-                <![CDATA[
-        #region IDisposable Members
-        
-        // --------------------------------------------
-        // NOTE: Implement IDisposable for the class
-        // --------------------------------------------
-        
-        private bool _isDisposed = false;
+		xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+		<CodeSnippet Format="1.0.0">
+				<Header>
+						<Title>IDisposable - Base class</Title>
+						<Author>Deleep Nair</Author>
+						<Description>Based on the blog by Paul Ballard (http://blog.pluralsight.com/idisposable-for-dummies-1-why-what)</Description>
+						<Shortcut>IDisposeBase</Shortcut>
+				</Header>
+				<Snippet>
+					<Imports>
+						<Import>
+							<Namespace>System</Namespace>
+						</Import>
+					</Imports>
+					<Declarations>
+						<Object>
+							<ID>ManagedGlobalResource</ID>
+							<ToolTip>Global resource variable name</ToolTip>
+							<Type>System.Object</Type>
+							<Default>_managedResource</Default>
+						</Object>
+						<Object>
+							<ID>DisposingObject</ID>
+							<ToolTip>Global resource variable name</ToolTip>
+							<Type>System.Object</Type>
+							<Default>CurrentObject</Default>
+						</Object>
+					</Declarations>
+					<Code Language="CSharp">
+								<![CDATA[
+				#region IDisposable Members
+				
+				// --------------------------------------------
+				// NOTE: Implement IDisposable for the class
+				// --------------------------------------------
+				
+				private bool _isDisposed = false;
 
-        /// <summary>
-        /// Finalize method to dispose resources when object goes out of scope.
-        /// </summary>
-        /// <remarks>
-        /// This code should be used as-is for the Dispose functionality.
-        /// </remarks>
-        ~$DisposingObject$() {
-            Dispose(false);
-        }
+				/// <summary>
+				/// Finalize method to dispose resources when object goes out of scope.
+				/// </summary>
+				/// <remarks>
+				/// This code should be used as-is for the Dispose functionality.
+				/// </remarks>
+				~$DisposingObject$() {
+						Dispose(false);
+				}
 
-        /// <summary>
-        /// Method that will be called explicitly to dispose the resources in this object.
-        /// </summary>
-        /// <remarks>
-        /// This code should be used as-is for the Dispose functionality.
-        /// </remarks>
-        public void Dispose() {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+				/// <summary>
+				/// Method that will be called explicitly to dispose the resources in this object.
+				/// </summary>
+				/// <remarks>
+				/// This code should be used as-is for the Dispose functionality.
+				/// </remarks>
+				public void Dispose() {
+						Dispose(true);
+						GC.SuppressFinalize(this);
+				}
 
-        /// <summary>
-        /// Method that handles the logic to dispose object when it goes out of scope and when disposed explicitly.
-        ///  Also, handles the redundant object disposal.
-        /// </summary>
-        /// <remarks>
-        /// This code should be used as-is for the Dispose functionality and should be overriden by derived classes.
-        /// </remarks>
-        private void Dispose(bool canDisposeManagedResources) {
-            if (this._isDisposed) {
-			          return;			
-            }
+				/// <summary>
+				/// Method that handles the logic to dispose object when it goes out of scope and when disposed explicitly.
+				///  Also, handles the redundant object disposal.
+				/// </summary>
+				/// <remarks>
+				/// This code should be used as-is for the Dispose functionality and should be overridden by derived classes.
+				/// </remarks>
+				private void Dispose(bool canDisposeManagedResources) {
+						if (this._isDisposed) {
+							return;			
+						}
 
-            if (canDisposeManagedResources) {
-                try {
-                    this.DisposeManagedResources();
-                } catch (Exception ex) {
+						if (canDisposeManagedResources) {
+								try {
+									this.DisposeManagedResources();
+								} catch (Exception ex) {
 
-                }
-            }
+								}
+						}
 
-            try {
-                this.DisposeUnmanagedResources();
-            } catch (Exception ex) {
+						try {
+								this.DisposeUnmanagedResources();
+						} catch (Exception ex) {
 
-            }
+						}
 
-            this._isDisposed = true;
-        }
+						this._isDisposed = true;
+				}
 
-        /// <summary>
-        /// Dispose all managed resources here.
-        /// </summary>
-        protected virtual void DisposeManagedResources() {
-			
-            if ($ManagedGlobalResource$ != null) {
-	              $ManagedGlobalResource$.Dispose();
-	              $ManagedGlobalResource$ = null;
-            }
+				/// <summary>
+				/// Dispose all managed resources here.
+				/// </summary>
+				protected virtual void DisposeManagedResources() {
 
-        }
-    
-        /// <summary>
-        /// Dispose all the unmanaged resources here.
-        /// </summary>
-        protected virtual void DisposeUnmanagedResources() {
-    
-        }
-    
-        /// <summary>
-        /// This should be the first statement in all public members of this object.
-        /// </summary>
-        protected void CheckIfDisposeAndRaiseException() {
-        
-            if (this._isDisposed) {
-                throw new ObjectDisposedException(this.GetType().FullName);
-            }
+						if ($ManagedGlobalResource$ != null) {
+								$ManagedGlobalResource$.Dispose();
+								$ManagedGlobalResource$ = null;
+						}
 
-        }
+				}
 
-        #endregion
+				/// <summary>
+				/// Dispose all the unmanaged resources here.
+				/// </summary>
+				protected virtual void DisposeUnmanagedResources() {
 
-              ]]>
-            </Code>
+				}
 
-        </Snippet>
-        
-    </CodeSnippet>
+				/// <summary>
+				/// This should be the first statement in all public members of this object.
+				/// </summary>
+				protected void CheckIfDisposeAndRaiseException() {
+
+						if (this._isDisposed) {
+								throw new ObjectDisposedException(this.GetType().FullName);
+						}
+
+				}
+
+				#endregion
+							]]>
+						</Code>
+				</Snippet>
+		</CodeSnippet>
 </CodeSnippets>
