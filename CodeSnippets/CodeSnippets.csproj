@@ -42,6 +42,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="IDisposable\CSharp\DisposeIDisposable.snippet">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="IDisposable\CSharp\IDisposableDerived.snippet">
       <SubType>Designer</SubType>
     </None>
